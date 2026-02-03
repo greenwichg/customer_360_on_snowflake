@@ -1,0 +1,83 @@
+customer_id,first_name,last_name,email,phone,date_of_birth,gender,registration_date,customer_segment,address_line1,city,state,postal_code,country,loyalty_points,preferred_contact,is_active
+CUST-10001,John,Smith,john.smith@email.com,+1-555-0101,1985-03-15,M,2022-01-15,Premium,123 Main Street,New York,NY,10001,USA,15420,EMAIL,true
+CUST-10002,Sarah,Johnson,sarah.j@email.com,+1-555-0102,1990-07-22,F,2022-02-20,Standard,456 Oak Avenue,Los Angeles,CA,90001,USA,8750,SMS,true
+CUST-10003,Michael,Williams,m.williams@email.com,+1-555-0103,1978-11-08,M,2022-03-10,VIP,789 Pine Road,Chicago,IL,60601,USA,45200,EMAIL,true
+CUST-10004,Emily,Brown,emily.brown@email.com,+1-555-0104,1995-05-30,F,2022-04-05,Standard,321 Elm Street,Houston,TX,77001,USA,3200,EMAIL,true
+CUST-10005,David,Jones,d.jones@email.com,+1-555-0105,1982-09-12,M,2022-05-18,Premium,654 Maple Drive,Phoenix,AZ,85001,USA,12800,PHONE,true
+CUST-10006,Jessica,Garcia,jess.garcia@email.com,+1-555-0106,1988-12-03,F,2022-06-22,Standard,987 Cedar Lane,Philadelphia,PA,19101,USA,5600,SMS,true
+CUST-10007,Christopher,Miller,c.miller@email.com,+1-555-0107,1975-04-18,M,2022-07-30,VIP,147 Birch Court,San Antonio,TX,78201,USA,38500,EMAIL,true
+CUST-10008,Amanda,Davis,amanda.d@email.com,+1-555-0108,1992-08-25,F,2022-08-14,Premium,258 Walnut Way,San Diego,CA,92101,USA,9800,EMAIL,true
+CUST-10009,Matthew,Rodriguez,matt.rod@email.com,+1-555-0109,1980-01-07,M,2022-09-03,Standard,369 Spruce Avenue,Dallas,TX,75201,USA,4100,SMS,true
+CUST-10010,Ashley,Martinez,a.martinez@email.com,+1-555-0110,1998-06-14,F,2022-10-19,Basic,741 Willow Street,San Jose,CA,95101,USA,1200,EMAIL,true
+CUST-10011,Daniel,Anderson,dan.anderson@email.com,+1-555-0111,1983-10-28,M,2022-11-08,Premium,852 Cherry Lane,Austin,TX,78701,USA,11500,PHONE,true
+CUST-10012,Jennifer,Taylor,jen.taylor@email.com,+1-555-0112,1991-02-19,F,2022-12-15,VIP,963 Peach Drive,Jacksonville,FL,32201,USA,52000,EMAIL,true
+CUST-10013,James,Thomas,j.thomas@email.com,+1-555-0113,1977-07-04,M,2023-01-22,Standard,159 Plum Court,Fort Worth,TX,76101,USA,6300,EMAIL,true
+CUST-10014,Michelle,Hernandez,m.hernandez@email.com,+1-555-0114,1994-11-11,F,2023-02-28,Premium,357 Apple Way,Columbus,OH,43201,USA,14200,SMS,true
+CUST-10015,Robert,Moore,r.moore@email.com,+1-555-0115,1986-03-23,M,2023-03-15,Standard,486 Orange Avenue,Charlotte,NC,28201,USA,4800,EMAIL,true
+CUST-10016,Stephanie,Jackson,steph.j@email.com,+1-555-0116,1989-09-06,F,2023-04-10,Basic,624 Grape Street,San Francisco,CA,94101,USA,2100,PHONE,true
+CUST-10017,William,White,w.white@email.com,+1-555-0117,1973-12-30,M,2023-05-05,VIP,753 Lemon Lane,Indianapolis,IN,46201,USA,41000,EMAIL,true
+CUST-10018,Nicole,Harris,nicole.h@email.com,+1-555-0118,1996-04-17,F,2023-06-20,Standard,891 Lime Drive,Seattle,WA,98101,USA,3700,SMS,true
+CUST-10019,Joseph,Martin,joe.martin@email.com,+1-555-0119,1981-08-09,M,2023-07-12,Premium,234 Mango Court,Denver,CO,80201,USA,10500,EMAIL,true
+CUST-10020,Elizabeth,Thompson,liz.t@email.com,+1-555-0120,1993-01-26,F,2023-08-08,Standard,567 Kiwi Way,Boston,MA,02101,USA,5200,EMAIL,true
+CUST-10021,Andrew,Garcia,a.garcia@email.com,+1-555-0121,1979-05-13,M,2023-01-05,VIP,890 Berry Avenue,Nashville,TN,37201,USA,35800,PHONE,true
+CUST-10022,Megan,Martinez,meg.m@email.com,+1-555-0122,1997-10-02,F,2023-02-14,Basic,123 Fig Street,Detroit,MI,48201,USA,1800,EMAIL,true
+CUST-10023,Kevin,Robinson,k.robinson@email.com,+1-555-0123,1984-06-28,M,2023-03-22,Premium,456 Date Lane,Portland,OR,97201,USA,13600,SMS,true
+CUST-10024,Rachel,Clark,rachel.c@email.com,+1-555-0124,1990-12-15,F,2023-04-18,Standard,789 Coconut Drive,Las Vegas,NV,89101,USA,4500,EMAIL,true
+CUST-10025,Brandon,Rodriguez,b.rod@email.com,+1-555-0125,1976-02-08,M,2023-05-30,Premium,321 Papaya Court,Oklahoma City,OK,73101,USA,11800,EMAIL,true
+CUST-10026,Lauren,Lewis,lauren.l@email.com,+1-555-0126,1987-08-21,F,2023-06-15,Standard,654 Guava Way,Louisville,KY,40201,USA,5900,PHONE,true
+CUST-10027,Timothy,Lee,tim.lee@email.com,+1-555-0127,1992-04-04,M,2023-07-28,Basic,987 Passion Avenue,Milwaukee,WI,53201,USA,2400,EMAIL,true
+CUST-10028,Samantha,Walker,sam.walker@email.com,+1-555-0128,1985-11-17,F,2023-08-20,VIP,147 Melon Street,Albuquerque,NM,87101,USA,48000,SMS,true
+CUST-10029,Jason,Hall,j.hall@email.com,+1-555-0129,1980-07-10,M,2023-09-12,Standard,258 Pear Lane,Tucson,AZ,85701,USA,3900,EMAIL,true
+CUST-10030,Heather,Allen,h.allen@email.com,+1-555-0130,1994-03-25,F,2023-10-05,Premium,369 Apricot Drive,Fresno,CA,93701,USA,12100,EMAIL,true
+CUST-10031,Ryan,Young,ryan.y@email.com,+1-555-0131,1989-09-18,M,2023-11-18,Standard,741 Nectarine Court,Sacramento,CA,95801,USA,4200,PHONE,true
+CUST-10032,Brittany,King,brit.king@email.com,+1-555-0132,1995-01-31,F,2023-12-02,Basic,852 Tangerine Way,Kansas City,MO,64101,USA,1500,SMS,true
+CUST-10033,Eric,Wright,e.wright@email.com,+1-555-0133,1978-06-07,M,2022-01-28,VIP,963 Grapefruit Avenue,Mesa,AZ,85201,USA,39200,EMAIL,true
+CUST-10034,Amber,Lopez,amber.l@email.com,+1-555-0134,1991-12-20,F,2022-03-16,Premium,159 Clementine Street,Atlanta,GA,30301,USA,10800,EMAIL,true
+CUST-10035,Jacob,Hill,j.hill@email.com,+1-555-0135,1983-05-14,M,2022-05-09,Standard,357 Avocado Lane,Colorado Springs,CO,80901,USA,6100,SMS,true
+CUST-10036,Christina,Scott,c.scott@email.com,+1-555-0136,1996-10-27,F,2022-07-24,Basic,486 Persimmon Drive,Omaha,NE,68101,USA,2800,EMAIL,true
+CUST-10037,Nathan,Green,n.green@email.com,+1-555-0137,1982-02-12,M,2022-09-07,Premium,624 Pomegranate Court,Raleigh,NC,27601,USA,13200,PHONE,true
+CUST-10038,Melissa,Adams,mel.adams@email.com,+1-555-0138,1988-08-05,F,2022-11-21,Standard,753 Starfruit Way,Miami,FL,33101,USA,5500,EMAIL,true
+CUST-10039,Tyler,Nelson,t.nelson@email.com,+1-555-0139,1993-04-19,M,2023-01-14,VIP,891 Dragonfruit Avenue,Virginia Beach,VA,23451,USA,42500,EMAIL,true
+CUST-10040,Kayla,Carter,kayla.c@email.com,+1-555-0140,1986-11-02,F,2023-03-30,Premium,234 Lychee Street,Oakland,CA,94601,USA,11200,SMS,true
+CUST-10041,Justin,Mitchell,j.mitchell@email.com,+1-555-0141,1979-07-16,M,2022-02-08,Standard,567 Kumquat Lane,Minneapolis,MN,55401,USA,4700,EMAIL,true
+CUST-10042,Lindsey,Perez,l.perez@email.com,+1-555-0142,1997-03-29,F,2022-04-25,Basic,890 Rambutan Drive,Tulsa,OK,74101,USA,1900,PHONE,true
+CUST-10043,Adam,Roberts,a.roberts@email.com,+1-555-0143,1984-09-11,M,2022-06-18,VIP,123 Durian Court,Arlington,TX,76001,USA,36500,EMAIL,true
+CUST-10044,Vanessa,Turner,v.turner@email.com,+1-555-0144,1990-01-24,F,2022-08-11,Premium,456 Jackfruit Way,New Orleans,LA,70112,USA,9600,SMS,true
+CUST-10045,Derek,Phillips,d.phillips@email.com,+1-555-0145,1975-05-07,M,2022-10-04,Standard,789 Mangosteen Avenue,Wichita,KS,67201,USA,5800,EMAIL,true
+CUST-10046,Tiffany,Campbell,tiff.c@email.com,+1-555-0146,1992-11-20,F,2022-12-27,Premium,321 Breadfruit Street,Cleveland,OH,44101,USA,10200,EMAIL,true
+CUST-10047,Chad,Parker,chad.p@email.com,+1-555-0147,1987-03-03,M,2023-02-19,Basic,654 Soursop Lane,Bakersfield,CA,93301,USA,2600,PHONE,true
+CUST-10048,Crystal,Evans,crystal.e@email.com,+1-555-0148,1981-08-26,F,2023-04-13,VIP,987 Cherimoya Drive,Tampa,FL,33601,USA,47500,SMS,true
+CUST-10049,Marcus,Edwards,m.edwards@email.com,+1-555-0149,1994-02-09,M,2023-06-06,Standard,147 Sapodilla Court,Aurora,CO,80010,USA,4000,EMAIL,true
+CUST-10050,Danielle,Collins,d.collins@email.com,+1-555-0150,1989-06-22,F,2023-08-29,Premium,258 Tamarind Way,Anaheim,CA,92801,USA,12500,EMAIL,true
+CUST-10051,Travis,Stewart,t.stewart@email.com,+1-555-0151,1976-12-05,M,2022-01-10,Standard,369 Feijoa Avenue,Honolulu,HI,96801,USA,5300,PHONE,true
+CUST-10052,Courtney,Sanchez,c.sanchez@email.com,+1-555-0152,1998-05-18,F,2022-03-03,Basic,741 Marula Street,Santa Ana,CA,92701,USA,1700,EMAIL,true
+CUST-10053,Kyle,Morris,kyle.m@email.com,+1-555-0153,1985-10-31,M,2022-05-26,VIP,852 Langsat Lane,St. Louis,MO,63101,USA,43800,SMS,true
+CUST-10054,Kimberly,Rogers,kim.r@email.com,+1-555-0154,1991-04-14,F,2022-07-19,Premium,963 Salak Drive,Riverside,CA,92501,USA,11700,EMAIL,true
+CUST-10055,Brett,Reed,b.reed@email.com,+1-555-0155,1983-09-27,M,2022-09-22,Standard,159 Longan Court,Corpus Christi,TX,78401,USA,4400,EMAIL,true
+CUST-10056,Shannon,Cook,s.cook@email.com,+1-555-0156,1996-03-10,F,2022-11-15,Premium,357 Ackee Way,Lexington,KY,40501,USA,13800,PHONE,true
+CUST-10057,Wesley,Morgan,w.morgan@email.com,+1-555-0157,1980-07-23,M,2023-01-08,Basic,486 Pitaya Avenue,Stockton,CA,95201,USA,2200,SMS,true
+CUST-10058,Kelly,Bell,kelly.b@email.com,+1-555-0158,1988-12-06,F,2023-03-23,VIP,624 Camu Camu Street,Henderson,NV,89011,USA,51000,EMAIL,true
+CUST-10059,Garrett,Murphy,g.murphy@email.com,+1-555-0159,1993-05-19,M,2023-05-16,Standard,753 Acai Lane,St. Paul,MN,55101,USA,3800,EMAIL,true
+CUST-10060,Angela,Bailey,a.bailey@email.com,+1-555-0160,1986-01-02,F,2023-07-09,Premium,891 Cupuacu Drive,Newark,NJ,07101,USA,10900,SMS,true
+CUST-10061,Patrick,Rivera,p.rivera@email.com,+1-555-0161,1977-06-15,M,2022-02-21,Standard,234 Jabuticaba Court,Greensboro,NC,27401,USA,5100,PHONE,true
+CUST-10062,Holly,Cooper,h.cooper@email.com,+1-555-0162,1995-11-28,F,2022-04-14,Basic,567 Genip Way,Plano,TX,75001,USA,1400,EMAIL,true
+CUST-10063,Douglas,Richardson,d.richardson@email.com,+1-555-0163,1982-04-11,M,2022-06-27,VIP,890 Mamey Avenue,Lincoln,NE,68501,USA,37800,EMAIL,true
+CUST-10064,Alexis,Cox,a.cox@email.com,+1-555-0164,1990-10-24,F,2022-08-20,Premium,123 Canistel Street,Buffalo,NY,14201,USA,12300,SMS,true
+CUST-10065,Derek,Howard,d.howard@email.com,+1-555-0165,1984-03-07,M,2022-10-13,Standard,456 Santol Lane,Jersey City,NJ,07301,USA,4600,EMAIL,true
+CUST-10066,Monica,Ward,m.ward@email.com,+1-555-0166,1997-08-20,F,2022-12-06,Premium,789 Bacuri Drive,Chula Vista,CA,91910,USA,11400,PHONE,true
+CUST-10067,Keith,Torres,k.torres@email.com,+1-555-0167,1979-01-13,M,2023-02-09,Basic,321 Tucuma Court,Fort Wayne,IN,46801,USA,2500,EMAIL,true
+CUST-10068,Rebecca,Peterson,r.peterson@email.com,+1-555-0168,1992-07-26,F,2023-04-02,VIP,654 Buriti Way,Orlando,FL,32801,USA,44200,SMS,true
+CUST-10069,Sean,Gray,s.gray@email.com,+1-555-0169,1987-12-09,M,2023-05-25,Standard,987 Uxi Avenue,Chandler,AZ,85224,USA,3600,EMAIL,true
+CUST-10070,Laura,Ramirez,l.ramirez@email.com,+1-555-0170,1994-04-22,F,2023-07-18,Premium,147 Inaja Street,Laredo,TX,78040,USA,10600,EMAIL,true
+CUST-10071,Chad,James,c.james@email.com,+1-555-0171,1981-09-05,M,2022-01-31,Standard,258 Pataua Lane,Durham,NC,27701,USA,5000,PHONE,true
+CUST-10072,Jenna,Watson,j.watson@email.com,+1-555-0172,1996-02-18,F,2022-03-24,Basic,369 Pupunha Drive,Lubbock,TX,79401,USA,1600,SMS,true
+CUST-10073,Grant,Brooks,g.brooks@email.com,+1-555-0173,1983-07-01,M,2022-05-17,VIP,741 Murici Court,Madison,WI,53701,USA,40500,EMAIL,true
+CUST-10074,Andrea,Kelly,a.kelly@email.com,+1-555-0174,1989-12-14,F,2022-07-10,Premium,852 Cajá Way,Gilbert,AZ,85233,USA,9900,EMAIL,true
+CUST-10075,Lance,Sanders,l.sanders@email.com,+1-555-0175,1975-05-27,M,2022-09-03,Standard,963 Taperebá Avenue,North Las Vegas,NV,89030,USA,5400,SMS,true
+CUST-10076,Erica,Price,e.price@email.com,+1-555-0176,1991-10-10,F,2022-10-26,Premium,159 Umbu Street,St. Petersburg,FL,33701,USA,13100,PHONE,true
+CUST-10077,Victor,Bennett,v.bennett@email.com,+1-555-0177,1986-03-23,M,2022-12-19,Basic,357 Siriguela Lane,Irving,TX,75001,USA,2700,EMAIL,true
+CUST-10078,Christine,Wood,c.wood@email.com,+1-555-0178,1993-08-06,F,2023-02-11,VIP,486 Seriguela Drive,Hialeah,FL,33010,USA,46800,EMAIL,true
+CUST-10079,Brent,Barnes,b.barnes@email.com,+1-555-0179,1980-01-19,M,2023-04-04,Standard,624 Pitomba Court,Reno,NV,89501,USA,4300,SMS,true
+CUST-10080,Natalie,Ross,n.ross@email.com,+1-555-0180,1997-06-02,F,2023-05-27,Premium,753 Araçá Way,Chesapeake,VA,23320,USA,11000,EMAIL,true
+CUST-10081,Corey,Henderson,c.henderson@email.com,+1-555-0181,1984-11-15,M,2022-02-04,Standard,891 Grumixama Avenue,Garland,TX,75040,USA,4900,PHONE,true
+CUST-10082,Sarah,Coleman,s.coleman@email.com,+1-555-0182,1990-04-28,F,2022-03-29,VIP,234 Guabiroba Street,Glendale,AZ,85301,USA,38000,EMAIL,true
