@@ -229,17 +229,223 @@ WHERE dq_is_valid = TRUE;
 -- SECTION 6: VERIFY FACT TABLE
 -- =============================================================================
 
--- Sample query: Daily sales summary
--- SELECT
---     d.full_date,
---     d.day_name,
---     st.region,
---     COUNT(DISTINCT f.order_id) AS order_count,
---     SUM(f.quantity) AS units_sold,
---     SUM(f.net_amount) AS total_revenue,
---     AVG(f.net_amount) AS avg_order_value
--- FROM FACT_SALES f
--- JOIN DIM_DATE d ON f.date_key = d.date_key
--- JOIN DIM_STORE st ON f.store_key = st.store_key
--- GROUP BY 1, 2, 3
--- ORDER BY 1, 3;
+-- 6.1: View table structure
+DESCRIBE TABLE FACT_SALES;
+DESCRIBE TABLE DIM_DATE;
+DESCRIBE TABLE DIM_PRODUCT;
+DESCRIBE TABLE DIM_STORE;
+
+-- 6.2: Show table metadata
+SHOW TABLES LIKE 'FACT_SALES' IN SCHEMA CURATED;
+SHOW TABLES LIKE 'DIM_%' IN SCHEMA CURATED;
+
+-- 6.3: Row counts for all tables
+SELECT 'FACT_SALES' AS table_name, COUNT(*) AS row_count FROM FACT_SALES
+UNION ALL
+SELECT 'DIM_DATE', COUNT(*) FROM DIM_DATE
+UNION ALL
+SELECT 'DIM_PRODUCT', COUNT(*) FROM DIM_PRODUCT
+UNION ALL
+SELECT 'DIM_STORE', COUNT(*) FROM DIM_STORE
+UNION ALL
+SELECT 'DIM_CUSTOMER', COUNT(*) FROM DIM_CUSTOMER;
+
+-- 6.4: Check clustering information for fact table
+SELECT SYSTEM$CLUSTERING_INFORMATION('CURATED.FACT_SALES', '(date_key, store_key)');
+
+-- 6.5: Verify foreign key relationships (orphan check)
+SELECT 'Orphan Customer Keys' AS check_type, COUNT(*) AS orphan_count
+FROM FACT_SALES f
+WHERE f.customer_key IS NOT NULL
+  AND NOT EXISTS (SELECT 1 FROM DIM_CUSTOMER c WHERE c.customer_key = f.customer_key)
+UNION ALL
+SELECT 'Orphan Product Keys', COUNT(*)
+FROM FACT_SALES f
+WHERE f.product_key IS NOT NULL
+  AND NOT EXISTS (SELECT 1 FROM DIM_PRODUCT p WHERE p.product_key = f.product_key)
+UNION ALL
+SELECT 'Orphan Store Keys', COUNT(*)
+FROM FACT_SALES f
+WHERE f.store_key IS NOT NULL
+  AND NOT EXISTS (SELECT 1 FROM DIM_STORE s WHERE s.store_key = f.store_key)
+UNION ALL
+SELECT 'Orphan Date Keys', COUNT(*)
+FROM FACT_SALES f
+WHERE NOT EXISTS (SELECT 1 FROM DIM_DATE d WHERE d.date_key = f.date_key);
+
+-- 6.6: Data quality summary
+SELECT
+    COUNT(*) AS total_rows,
+    COUNT(DISTINCT order_id) AS unique_orders,
+    COUNT(DISTINCT customer_key) AS unique_customers,
+    COUNT(DISTINCT product_key) AS unique_products,
+    COUNT(DISTINCT store_key) AS unique_stores,
+    MIN(transaction_timestamp) AS earliest_transaction,
+    MAX(transaction_timestamp) AS latest_transaction,
+    SUM(net_amount) AS total_revenue,
+    AVG(net_amount) AS avg_order_value
+FROM FACT_SALES;
+
+-- 6.7: Sample query - Daily sales summary by region
+SELECT
+    d.full_date,
+    d.day_name,
+    st.region,
+    COUNT(DISTINCT f.order_id) AS order_count,
+    SUM(f.quantity) AS units_sold,
+    SUM(f.net_amount) AS total_revenue,
+    ROUND(AVG(f.net_amount), 2) AS avg_order_value
+FROM FACT_SALES f
+JOIN DIM_DATE d ON f.date_key = d.date_key
+JOIN DIM_STORE st ON f.store_key = st.store_key
+GROUP BY 1, 2, 3
+ORDER BY 1, 3
+LIMIT 20;
+
+-- 6.8: Sample query - Product performance analysis
+SELECT
+    p.category,
+    p.subcategory,
+    p.brand,
+    COUNT(DISTINCT f.order_id) AS order_count,
+    SUM(f.quantity) AS units_sold,
+    SUM(f.net_amount) AS revenue,
+    SUM(f.gross_amount - f.net_amount) AS total_discount_given
+FROM FACT_SALES f
+JOIN DIM_PRODUCT p ON f.product_key = p.product_key
+GROUP BY 1, 2, 3
+ORDER BY revenue DESC
+LIMIT 20;
+
+-- 6.9: Sample query - Customer purchasing patterns
+SELECT
+    c.customer_segment,
+    c.loyalty_tier,
+    COUNT(DISTINCT c.customer_key) AS customer_count,
+    COUNT(DISTINCT f.order_id) AS total_orders,
+    SUM(f.net_amount) AS total_revenue,
+    ROUND(SUM(f.net_amount) / COUNT(DISTINCT c.customer_key), 2) AS revenue_per_customer,
+    ROUND(COUNT(DISTINCT f.order_id)::FLOAT / COUNT(DISTINCT c.customer_key), 2) AS orders_per_customer
+FROM FACT_SALES f
+JOIN DIM_CUSTOMER c ON f.customer_key = c.customer_key
+WHERE c.is_current = TRUE
+GROUP BY 1, 2
+ORDER BY total_revenue DESC;
+
+-- 6.10: Time-series trend analysis
+SELECT
+    d.year_number,
+    d.quarter_name,
+    d.month_name,
+    COUNT(DISTINCT f.order_id) AS orders,
+    SUM(f.net_amount) AS revenue,
+    LAG(SUM(f.net_amount)) OVER (ORDER BY d.year_number, d.quarter_number, d.month_number) AS prev_month_revenue,
+    ROUND((SUM(f.net_amount) - LAG(SUM(f.net_amount)) OVER (ORDER BY d.year_number, d.quarter_number, d.month_number)) /
+          NULLIF(LAG(SUM(f.net_amount)) OVER (ORDER BY d.year_number, d.quarter_number, d.month_number), 0) * 100, 2) AS mom_growth_pct
+FROM FACT_SALES f
+JOIN DIM_DATE d ON f.date_key = d.date_key
+GROUP BY d.year_number, d.quarter_number, d.quarter_name, d.month_number, d.month_name
+ORDER BY d.year_number, d.quarter_number, d.month_number;
+
+-- =============================================================================
+-- SECTION 7: GRANT PRIVILEGES
+-- =============================================================================
+
+-- Grants for RETAIL_ADMIN (full access)
+GRANT ALL PRIVILEGES ON TABLE FACT_SALES TO ROLE RETAIL_ADMIN;
+GRANT ALL PRIVILEGES ON TABLE DIM_DATE TO ROLE RETAIL_ADMIN;
+GRANT ALL PRIVILEGES ON TABLE DIM_PRODUCT TO ROLE RETAIL_ADMIN;
+GRANT ALL PRIVILEGES ON TABLE DIM_STORE TO ROLE RETAIL_ADMIN;
+
+-- Grants for RETAIL_ENGINEER (read/write for ETL)
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE FACT_SALES TO ROLE RETAIL_ENGINEER;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE DIM_DATE TO ROLE RETAIL_ENGINEER;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE DIM_PRODUCT TO ROLE RETAIL_ENGINEER;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE DIM_STORE TO ROLE RETAIL_ENGINEER;
+
+-- Grants for RETAIL_ANALYST (read-only)
+GRANT SELECT ON TABLE FACT_SALES TO ROLE RETAIL_ANALYST;
+GRANT SELECT ON TABLE DIM_DATE TO ROLE RETAIL_ANALYST;
+GRANT SELECT ON TABLE DIM_PRODUCT TO ROLE RETAIL_ANALYST;
+GRANT SELECT ON TABLE DIM_STORE TO ROLE RETAIL_ANALYST;
+GRANT SELECT ON TABLE DIM_CUSTOMER TO ROLE RETAIL_ANALYST;
+
+-- Grants for RETAIL_VIEWER (read-only)
+GRANT SELECT ON TABLE FACT_SALES TO ROLE RETAIL_VIEWER;
+GRANT SELECT ON TABLE DIM_DATE TO ROLE RETAIL_VIEWER;
+GRANT SELECT ON TABLE DIM_PRODUCT TO ROLE RETAIL_VIEWER;
+GRANT SELECT ON TABLE DIM_STORE TO ROLE RETAIL_VIEWER;
+
+-- Grant execute on loading procedure
+GRANT USAGE ON PROCEDURE SP_LOAD_FACT_SALES() TO ROLE RETAIL_ENGINEER;
+
+-- =============================================================================
+-- SECTION 8: INTERVIEW Q&A
+-- =============================================================================
+/*
+Q1: What is the grain of FACT_SALES?
+A1: One row per order line item. The grain defines the level of detail stored
+    in the fact table. In our case, each row represents a single product
+    purchased within an order (identified by order_id + order_line_id).
+
+Q2: Why use surrogate keys (date_key, customer_key) instead of natural keys?
+A2: Surrogate keys provide:
+    - Integer keys for faster joins (smaller than VARCHAR)
+    - Protection against source system key changes
+    - Support for SCD Type 2 (multiple versions of same customer)
+    - Handling of unknown/missing dimension values (-1 key)
+
+Q3: What are degenerate dimensions?
+A3: Degenerate dimensions are dimension attributes stored directly in the fact
+    table without a separate dimension table. Examples: order_id, order_line_id,
+    invoice_number. They provide context but don't need their own table.
+
+Q4: Why is FACT_SALES clustered by (date_key, store_key)?
+A4: Clustering optimizes query performance for common filter patterns:
+    - Most queries filter by date range (time-series analysis)
+    - Regional/store analysis is the second most common pattern
+    - Clustering co-locates related micro-partitions for efficient pruning
+    - Use SYSTEM$CLUSTERING_INFORMATION to verify clustering quality
+
+Q5: How do you handle late-arriving facts?
+A5: Options include:
+    - INSERT with all lookups (may have NULL dimension keys)
+    - Use a default/unknown dimension record (key = -1)
+    - Queue late facts for reprocessing after dimensions arrive
+    - Use MERGE with matching on business keys
+
+Q6: What's the difference between additive, semi-additive, and non-additive measures?
+A6: - Additive: Can be summed across all dimensions (quantity, amount)
+    - Semi-additive: Can be summed across some dimensions (account balance -
+      not additive across time, use point-in-time snapshot)
+    - Non-additive: Cannot be summed (ratios, percentages, unit_price)
+
+Q7: Why LEFT JOIN to dimensions instead of INNER JOIN during load?
+A7: LEFT JOIN ensures all facts load even if dimension lookup fails:
+    - New products not yet in DIM_PRODUCT
+    - Unknown/anonymous customers
+    - Data quality issues in source
+    Resulting NULL keys can trigger alerts for investigation.
+
+Q8: How do you handle fact table updates (order cancellations)?
+A8: Options:
+    - Type 1: Update the fact record directly (loses history)
+    - Type 2: Add a new row with negative amounts (audit trail)
+    - Flag column: Mark original as canceled, add reversal row
+    - Separate FACT_RETURNS table for better analytics
+
+Q9: What indexing exists on Snowflake fact tables?
+A9: Snowflake doesn't use traditional indexes. Instead:
+    - Micro-partition metadata (min/max values) enables pruning
+    - Clustering keys organize data for better pruning
+    - Search Optimization Service for point lookups
+    - No need to manage index maintenance
+
+Q10: How do you optimize fact table queries?
+A10: Best practices:
+     - Filter on clustered columns (date_key) early
+     - Use specific column lists (avoid SELECT *)
+     - Pre-aggregate in materialized views for common queries
+     - Ensure dimension tables have proper keys
+     - Monitor with QUERY_PROFILE for bottlenecks
+*/
