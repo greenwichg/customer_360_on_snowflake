@@ -1,0 +1,151 @@
+{
+    "_documentation": {
+        "description": "IAM policies for Snowflake-AWS integration in the Retail Analytics project",
+        "usage": "Create these policies and roles in AWS IAM to enable secure Snowflake access to S3",
+        "steps": [
+            "1. Create the IAM policy (snowflake-s3-access-policy)",
+            "2. Create the IAM role (snowflake-retail-role) with the trust policy",
+            "3. Attach the access policy to the role",
+            "4. Update Snowflake STORAGE INTEGRATION with the role ARN",
+            "5. Run DESC INTEGRATION to get Snowflake's IAM user ARN and External ID",
+            "6. Update the trust policy with the actual values from step 5"
+        ]
+    },
+
+    "snowflake_s3_access_policy": {
+        "PolicyName": "snowflake-s3-access-policy",
+        "Description": "Grants Snowflake read/write access to the retail data S3 bucket",
+        "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "AllowListBucket",
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3:ListBucket",
+                        "s3:GetBucketLocation"
+                    ],
+                    "Resource": "arn:aws:s3:::your-retail-data-bucket"
+                },
+                {
+                    "Sid": "AllowReadFromLanding",
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3:GetObject",
+                        "s3:GetObjectVersion"
+                    ],
+                    "Resource": [
+                        "arn:aws:s3:::your-retail-data-bucket/landing/*",
+                        "arn:aws:s3:::your-retail-data-bucket/archive/*"
+                    ]
+                },
+                {
+                    "Sid": "AllowWriteToStaging",
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3:PutObject",
+                        "s3:DeleteObject"
+                    ],
+                    "Resource": "arn:aws:s3:::your-retail-data-bucket/staging/*"
+                }
+            ]
+        }
+    },
+
+    "snowflake_trust_policy": {
+        "RoleName": "snowflake-retail-role",
+        "Description": "IAM role trust policy allowing Snowflake to assume this role via STS",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "AllowSnowflakeAssumeRole",
+                    "Effect": "Allow",
+                    "Principal": {
+                        "AWS": "<STORAGE_AWS_IAM_USER_ARN from DESC INTEGRATION>"
+                    },
+                    "Action": "sts:AssumeRole",
+                    "Condition": {
+                        "StringEquals": {
+                            "sts:ExternalId": "<STORAGE_AWS_EXTERNAL_ID from DESC INTEGRATION>"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+
+    "snowflake_sns_access_policy": {
+        "PolicyName": "snowflake-sns-access-policy",
+        "Description": "Grants Snowflake access to subscribe to SNS topics for Snowpipe auto-ingest",
+        "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "AllowSNSSubscribe",
+                    "Effect": "Allow",
+                    "Action": [
+                        "sns:Subscribe",
+                        "sns:Receive"
+                    ],
+                    "Resource": "arn:aws:sns:us-east-1:YOUR_AWS_ACCOUNT_ID:snowflake-retail-notifications"
+                },
+                {
+                    "Sid": "AllowSQSForSnowpipe",
+                    "Effect": "Allow",
+                    "Action": [
+                        "sqs:ReceiveMessage",
+                        "sqs:DeleteMessage",
+                        "sqs:GetQueueAttributes",
+                        "sqs:GetQueueUrl"
+                    ],
+                    "Resource": "arn:aws:sqs:us-east-1:YOUR_AWS_ACCOUNT_ID:snowflake-retail-queue"
+                }
+            ]
+        }
+    },
+
+    "s3_bucket_policy": {
+        "Description": "S3 bucket policy to allow SNS publishing for event notifications",
+        "BucketPolicy": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "AllowSNSPublishing",
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Service": "s3.amazonaws.com"
+                    },
+                    "Action": "sns:Publish",
+                    "Resource": "arn:aws:sns:us-east-1:YOUR_AWS_ACCOUNT_ID:snowflake-retail-notifications",
+                    "Condition": {
+                        "ArnLike": {
+                            "aws:SourceArn": "arn:aws:s3:::your-retail-data-bucket"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+
+    "kms_key_policy": {
+        "Description": "KMS key policy for S3 bucket encryption (if using SSE-KMS)",
+        "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "AllowSnowflakeDecrypt",
+                    "Effect": "Allow",
+                    "Principal": {
+                        "AWS": "<STORAGE_AWS_IAM_USER_ARN from DESC INTEGRATION>"
+                    },
+                    "Action": [
+                        "kms:Decrypt",
+                        "kms:GenerateDataKey"
+                    ],
+                    "Resource": "*"
+                }
+            ]
+        }
+    }
+}
